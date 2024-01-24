@@ -1,6 +1,11 @@
 name: My First GitHub Actions Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: [push]
+on: |
+  push:
+  pull_request:
+     branches:    
+      - main
+
 jobs:
   Job-1:
     runs-on: ubuntu-latest
