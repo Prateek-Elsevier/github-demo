@@ -31,7 +31,7 @@ jobs:
       - run: echo "🍏 This job's status is ${{ job.status }}."
   approve:
     runs-on: ubuntu-latest
-    needs: deploy
+    needs: Helm-Package
     steps:
       - name: Request Generic Approval
         uses: actions/github-script@v5
