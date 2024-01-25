@@ -40,7 +40,6 @@ jobs:
             const { data } = await github.graphql(`
               mutation {
                 createIssue(input: {
-                  repositoryId: ${{ github.repository.id }},
                   title: "Release Approval",
                   body: "Please approve the release."
                 }) {
