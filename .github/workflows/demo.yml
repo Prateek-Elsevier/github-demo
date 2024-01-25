@@ -33,22 +33,18 @@ jobs:
     runs-on: ubuntu-latest
     needs: Helm-Package
     steps:
-      - name: Request Generic Approval
-        uses: actions/github-script@v5
+      - uses: trstringer/manual-approval@v1
         with:
-          script: |
-            const { data } = await github.graphql(`
-              mutation {
-                createIssue(input: {
-                  repositoryId: ${{ github.repository_id }},
-                  title: "Release Approval",
-                  body: "Please approve the release."
-                }) {
-                  issue {
-                    id
-                  }
-                }
-              }
-            `);
-            console.log(data);
-          token: ${{ secrets.GITHUB_TOKEN }}
+          secret: ${{ github.TOKEN }}
+          approvers: prateek-elsevier
+  Deploy-to-Non-Prod:
+    runs-on: ubuntu-latest
+    needs: Approve
+    steps:
+      - run: echo "Deploying..."
+  Alert-to-Slack: 
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Alert to slack....."
+
+  
