@@ -1,4 +1,4 @@
-name: My Second GitHub Actions Demo
+name: PR initiate
 on:
   pull_request:
     branches:
