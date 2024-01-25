@@ -37,3 +37,15 @@ jobs:
         with:
           secret: ${{ github.TOKEN }}
           approvers: prateek-elsevier
+  Deploy-to-Non-Prod:
+    runs-on: ubuntu-latest
+    needs: Approve
+    steps:
+      - run: echo "Deploying..."
+  Alert-to-Slack
+    runs-on: ubuntu-latest
+    needs: Approve
+    steps:
+      - run: echo "Alert to slack....."
+
+  
