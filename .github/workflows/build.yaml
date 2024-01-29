@@ -4,6 +4,7 @@ on:
     branches:
       - 'feature*'
       - 'JIRA*'
+      - main
       
 jobs:
   Gradle-Build:
