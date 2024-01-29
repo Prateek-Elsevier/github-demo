@@ -27,3 +27,9 @@ jobs:
         steps: 
             - name: Deploy
               run: echo "Deploying in test"
+    Deploy-to-bce-env:
+        runs-on: ubuntu-latest
+        if: ${{ github.event.inputs.Env == 'bce' }}
+        steps: 
+            - name: Deploy
+              run: echo "Deploying in bce"
