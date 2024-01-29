@@ -14,6 +14,8 @@ on:
                 - dev
                 - test
                 - bce
+run-name: "Build Job trigger by @${{ github.actor }} on the event : ${{ github.event_name }}"
+
 jobs:
     Deploy-to-dev-env:
         runs-on: ubuntu-latest

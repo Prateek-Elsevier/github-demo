@@ -4,6 +4,7 @@ on:
     branches:
       - 'feature*'
       - 'JIRA*'
+run-name: "Build Job trigger by @${{ github.actor }} on the event : ${{ github.event_name }}"
       
 jobs:
   Gradle-Build:
