@@ -1,0 +1,11 @@
+name: Deploy
+on:
+    workflow_run:
+        workflows: [Build-WF]
+        types: [completed]
+jobs:
+    Deploy-to-target-env:
+        runs-on: ubuntu-latest
+        steps: 
+            - name: Deploy
+              run: echo "Deploying"
