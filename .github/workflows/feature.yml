@@ -29,22 +29,45 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
-  Approve:
-    runs-on: ubuntu-latest
-    needs: Helm-Package
-    steps:
-      - uses: trstringer/manual-approval@v1
-        with:
-          secret: ${{ github.TOKEN }}
-          approvers: prateek-elsevier
-  Deploy-to-Non-Prod:
-    runs-on: ubuntu-latest
-    needs: Approve
-    steps:
-      - run: echo "Deploying..."
   Alert-to-Slack: 
     runs-on: ubuntu-latest
     steps:
       - run: echo "Alert to slack....."
+  deploy-dev:
+    runs-on: ubuntu-latest
+    needs: Helm-Package
+    if: github.event_name == 'workflow_dispatch'
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Deploy to Dev
+      run: echo "Deploying in dev"
+
+  deploy-test:
+    runs-on: ubuntu-latest
+    needs: Helm-Package
+    if: github.event_name == 'workflow_dispatch'
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Deploy to Test
+      run: echo "Deploying in test..."
+
+  deploy-bce:
+    runs-on: ubuntu-latest
+    needs: Helm-Package
+    if: github.event_name == 'workflow_dispatch'
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Deploy to BCE
+      run: echo "Deploying in BCE..."
+
 
   
