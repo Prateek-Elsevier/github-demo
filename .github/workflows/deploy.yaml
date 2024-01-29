@@ -3,6 +3,8 @@ on:
     workflow_run:
         workflows: [Build-WF]
         types: [completed]
+        branches:
+            - feature*
 jobs:
     Deploy-to-target-env:
         runs-on: ubuntu-latest
