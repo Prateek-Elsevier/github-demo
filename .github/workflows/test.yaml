@@ -1,0 +1,24 @@
+name: Testing buttons Deploy
+on:
+    workflow_dispatch:
+        inputs:
+            Env:
+                type: choice
+                description: Environment to Deploy
+                options: 
+                - dev
+                - test
+                - bce
+jobs:
+    Deploy-to-dev-env:
+        runs-on: ubuntu-latest
+        if: ${{ github.event.inputs.Env == 'dev' }}
+        steps: 
+            - name: Deploy
+              run: echo "Deploying in dev"
+    Deploy-to-test-env:
+        runs-on: ubuntu-latest
+        if: ${{ github.event.inputs.Env == 'test' }}
+        steps: 
+            - name: Deploy
+              run: echo "Deploying in test"
