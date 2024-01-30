@@ -9,7 +9,9 @@ on:
             - dev
             - test
             - bce
-      
+      branches:
+        description: Branch to build
+        required: true
 jobs:
    Gradle-Build:
      runs-on: ubuntu-latest
