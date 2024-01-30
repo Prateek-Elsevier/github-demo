@@ -1,11 +1,6 @@
 name: Build-Deploy
 on:
-    push:
-     branches:
-       - 'feature*'
-       - 'JIRA*'
-
-    workflow_dispatch:
+   workflow_dispatch:
      inputs:
       Env:
         type: choice
