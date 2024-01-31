@@ -3,7 +3,7 @@ on:
     push:
         branches:
             - release*
-run-name: "This workflow is triggered by @ ${{ github.actor }} on the event: ${{ github.event_name }} on $(date)"
+run-name: "This workflow is triggered by @ ${{ github.actor }} on the event: ${{ github.event_name }}"
 
 jobs:
     Gradle-Build:
