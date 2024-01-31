@@ -1,0 +1,66 @@
+name: feature-build-deploy
+on:
+    workflow_dispatch:
+        inputs:
+            Environment:
+                type: choice
+                description: Environment to Deploy
+                options: 
+                    - dev
+                    - test
+                    - bce
+
+    push:
+        branches:
+            - feature*
+            - JIRA*
+            - release*
+
+run-name: "This workflow is triggered by @${{ github.actor }} on the event: ${{ github.event_name }}"
+
+jobs:
+    Gradle-Build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: build
+              run: echo "Gradle Build"
+
+    Docker-Build:
+        runs-on: ubuntu-latest
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        needs: Gradle-Build
+        steps:
+            - name: docker-build
+              run: echo "Docker Build"
+
+    Helm-Package:
+        runs-on: ubuntu-latest
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        needs: Docker-Build
+        steps:
+           - name: helm package
+             run: echo "Helm Package"
+
+    Deploy-to-dev:
+        runs-on: ubuntu-latest
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.Environment == 'dev' }}
+        needs: Helm-Package
+        steps:
+            - name: Dev Deployment
+              run: echo "Deployed to Dev"
+
+    Deploy-to-test:
+        runs-on: ubuntu-latest
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.Environment == 'test' }}
+        needs: Helm-Package
+        steps:
+            - name: Test Deploymnet
+              run: echo "Deployed to Test"
+
+    Deploy-to-bce:
+        runs-on: ubuntu-latest
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.Environment == 'bce' }}
+        needs: Helm-Package
+        steps:
+            - name: BCE Deploymnet
+              run: echo "Deployed to BCE"
