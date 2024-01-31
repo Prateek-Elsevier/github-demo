@@ -14,7 +14,6 @@ on:
         branches:
             - feature*
             - JIRA*
-            - release*
 
 run-name: "This workflow is triggered by @${{ github.actor }} on the event: ${{ github.event_name }}"
 
