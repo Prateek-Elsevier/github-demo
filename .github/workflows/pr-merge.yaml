@@ -1,0 +1,15 @@
+name: PR-Merge-to-main
+on:
+    pull_request:
+        branches:
+            - main
+
+run-name: "This workflow is triggered by @${{ github.actor }} on the event: ${{ github.event_name }}"
+
+jobs:
+    PR-Merge:
+        runs-on: ubuntu-latest
+        if: ${{ github.event.pull_request.merged == true }}
+        steps:
+                - name: build
+                  run: echo "Gradle Build @" $(date)

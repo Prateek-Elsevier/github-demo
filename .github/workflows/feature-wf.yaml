@@ -23,7 +23,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: build
-              run: echo "Gradle Build"
+              run: echo "Gradle Build @" $(date)
 
     Docker-Build:
         runs-on: ubuntu-latest
@@ -31,7 +31,7 @@ jobs:
         needs: Gradle-Build
         steps:
             - name: docker-build
-              run: echo "Docker Build"
+              run: echo "Docker Build @" $(date)
 
     Helm-Package:
         runs-on: ubuntu-latest
@@ -39,7 +39,7 @@ jobs:
         needs: Docker-Build
         steps:
            - name: helm package
-             run: echo "Helm Package"
+             run: echo "Helm Package @" $(date)
 
     Deploy-to-dev:
         runs-on: ubuntu-latest
@@ -47,7 +47,7 @@ jobs:
         needs: Helm-Package
         steps:
             - name: Dev Deployment
-              run: echo "Deployed to Dev"
+              run: echo "Deployed to Dev @" $(date)
 
     Deploy-to-test:
         runs-on: ubuntu-latest
@@ -55,7 +55,7 @@ jobs:
         needs: Helm-Package
         steps:
             - name: Test Deploymnet
-              run: echo "Deployed to Test"
+              run: echo "Deployed to Test @" $(date)
 
     Deploy-to-bce:
         runs-on: ubuntu-latest
@@ -63,4 +63,4 @@ jobs:
         needs: Helm-Package
         steps:
             - name: BCE Deploymnet
-              run: echo "Deployed to BCE"
+              run: echo "Deployed to BCE @" $(date)
