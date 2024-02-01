@@ -27,3 +27,19 @@ jobs:
           run: | 
             echo "Gradle Build @" $(date)
             echo ${{ github.ref }}
+    
+    Docker-Build:
+      runs-on: ubuntu-latest
+      if: ${{ github.event.pull_request.merged == true }}
+      needs: PR-Merge-closed
+      steps:
+        - name: docker-build
+          run: echo "Docker Build @" $(date)
+      
+    Helm-Package:
+      runs-on: ubuntu-latest
+      if: ${{ github.event.pull_request.merged == true }}
+      needs: Docker-Build
+      steps:
+        - name: helm package
+          run: echo "Helm Package @" $(date)
