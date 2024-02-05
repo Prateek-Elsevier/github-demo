@@ -1,5 +1,6 @@
 name: PR-Merge-to-main
 on:
+    workflow_dispatch:
     pull_request:
         types:
             - opened
@@ -43,3 +44,30 @@ jobs:
       steps:
         - name: helm package
           run: echo "Helm Package @" $(date)
+
+    Deploy-to-dev:
+      runs-on: ubuntu-latest
+      if: ${{ github.event_name == 'workflow_dispatch' }}
+      environment: dev
+      needs: Helm-Package
+      steps:
+        - name: Dev Deployment
+          run: echo "Deployed to Dev @" $(date)
+    
+    Deploy-to-test:
+      runs-on: ubuntu-latest
+      if: ${{ github.event_name == 'workflow_dispatch' }}
+      environment: test
+      needs: Helm-Package
+      steps:
+        - name: Test Deploymnet
+          run: echo "Deployed to Test @" $(date)
+    
+    Deploy-to-bce:
+      runs-on: ubuntu-latest
+      if: ${{ github.event_name == 'workflow_dispatch' }}
+      environment: bce
+      needs: Helm-Package
+      steps:
+        - name: BCE Deploymnet
+          run: echo "Deployed to BCE @" $(date)
