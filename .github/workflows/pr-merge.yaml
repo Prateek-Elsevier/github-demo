@@ -12,7 +12,7 @@ run-name: "This workflow is triggered by @${{ github.actor }} on the event: ${{ 
 
 jobs:
     PR-Merge-open:
-      if: ${{ github.event.pull_request.merged == false }}
+      if: ${{ github.event.pull_request.merged == false && github.event_name != 'workflow_dispatch' }}
       runs-on: ubuntu-latest
       steps:
         - name: build
@@ -21,7 +21,7 @@ jobs:
             echo ${{ github.ref }}
 
     PR-Merge-closed:
-       if: ${{ github.event.pull_request.merged == true }}
+       if: ${{ github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch' }}
        runs-on: ubuntu-latest
        steps:
         - name: build
