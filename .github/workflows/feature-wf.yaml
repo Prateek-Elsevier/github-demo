@@ -1,15 +1,6 @@
 name: feature-build-deploy
 on:
     workflow_dispatch:
-        inputs:
-            Environment:
-                type: choice
-                description: Environment to Deploy
-                options: 
-                    - dev
-                    - test
-                    - bce
-
     push:
         branches:
             - feature*
@@ -43,7 +34,8 @@ jobs:
 
     Deploy-to-dev:
         runs-on: ubuntu-latest
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.Environment == 'dev' }}
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        environment: dev
         needs: Helm-Package
         steps:
             - name: Dev Deployment
@@ -51,7 +43,8 @@ jobs:
 
     Deploy-to-test:
         runs-on: ubuntu-latest
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.Environment == 'test' }}
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        environment: test
         needs: Helm-Package
         steps:
             - name: Test Deploymnet
@@ -59,7 +52,8 @@ jobs:
 
     Deploy-to-bce:
         runs-on: ubuntu-latest
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.Environment == 'bce' }}
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        environment: bce
         needs: Helm-Package
         steps:
             - name: BCE Deploymnet
