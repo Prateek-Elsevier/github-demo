@@ -1,9 +1,6 @@
 name: Release
 on:
     workflow_dispatch:
-    push:
-        branches:
-            - release*
 
 run-name: "This workflow is triggered by @ ${{ github.actor }} on the event: ${{ github.event_name }}"
 
@@ -13,18 +10,23 @@ jobs:
         steps:
             - name: Build
               run: echo "Gradle build on $(date)"
+
+    Run-Scans-Tests:
+        runs-on: ubuntu-latest
+        needs: Gradle-Build
+        steps:
+            - name: Running Scans and Unit Test
+              run: echo "Scanned at $(date)"
     
     Docker-Build:
         runs-on: ubuntu-latest
-        if: ${{ github.event_name == 'workflow_dispatch' }}
-        needs: Gradle-Build
+        needs: Run-Scans-Tests
         steps:
             - name: Docker build
               run: echo "Docker build on $(date)"
 
     Helm-Package:
         runs-on: ubuntu-latest
-        if: ${{ github.event_name == 'workflow_dispatch' }}
         needs: Docker-Build
         steps:
             - name: Helm Package
@@ -33,7 +35,6 @@ jobs:
     Deploy-to-cert:
         runs-on: ubuntu-latest
         needs: Helm-Package
-        if: ${{ github.event_name == 'workflow_dispatch' }}
         environment: cert
         steps:
             - name: Deploy to cert
@@ -42,7 +43,6 @@ jobs:
     Deploy-to-pre-prod:
         runs-on: ubuntu-latest
         needs: Deploy-to-cert
-        if: ${{ github.event_name == 'workflow_dispatch' }}
         environment: pre-prod
         steps:
             - name: Deploy to pre-prod
@@ -51,7 +51,6 @@ jobs:
     Deploy-to-prod:
         runs-on: ubuntu-latest
         needs: Deploy-to-pre-prod
-        if: ${{ github.event_name == 'workflow_dispatch' }}
         environment: prod
         steps:
             - name: Deploy to prod

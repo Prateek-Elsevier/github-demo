@@ -16,10 +16,18 @@ jobs:
             - name: build
               run: echo "Gradle Build @" $(date)
 
-    Docker-Build:
+    Run-Scans-Tests:
         runs-on: ubuntu-latest
         if: ${{ github.event_name == 'workflow_dispatch' }}
         needs: Gradle-Build
+        steps:
+            - name: Running Scans and Unit Test
+              run: echo "Scanned at $(date)"
+
+    Docker-Build:
+        runs-on: ubuntu-latest
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        needs: Run-Scans-Tests
         steps:
             - name: docker-build
               run: echo "Docker Build @" $(date)
